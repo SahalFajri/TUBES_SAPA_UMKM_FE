@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
+import '../../../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +14,48 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // 1. Instansiasi AuthService
+  final AuthService _authService = AuthService();
+
+  bool _isLoading = false; // Untuk loading indicator
+
+  void _handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    // Tampung hasil error message (bukan boolean lagi)
+    String? errorMessage = await _authService.login(email, password);
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (errorMessage == null) {
+      // JIKA NULL = SUKSES
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login Berhasil!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    } else {
+      // JIKA ADA ISI = GAGAL (Tampilkan pesan error dari Backend/Joi)
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage), // <-- INI KUNCINYA (Pesan Dinamis)
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
             CustomButton(
-              text: "Masuk",
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/dashboard');
-              },
+              text: _isLoading ? "Loading..." : "Masuk",
+              onPressed: _isLoading ? null : _handleLogin,
             ),
             const SizedBox(height: 24),
             Row(

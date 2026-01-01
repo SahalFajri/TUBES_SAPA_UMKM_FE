@@ -1,9 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../services/auth_service.dart'; // 1. Import Service
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
+
+  // [2] TAMBAHKAN FUNGSI INI UNTUK MENANGANI LOGOUT
+  Future<void> _handleLogout(BuildContext context) async {
+    // Tampilkan Dialog Konfirmasi
+    bool? confirm = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Konfirmasi"),
+        content: const Text("Apakah Anda yakin ingin keluar?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Batal"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Keluar", style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    // Jika user batal, hentikan proses
+    if (confirm != true) return;
+
+    // Proses Logout (Hapus Token)
+    final AuthService authService = AuthService();
+    await authService.logout();
+
+    // Cek apakah widget masih aktif sebelum navigasi
+    if (!context.mounted) return;
+
+    // Navigasi ke Login & Hapus history halaman agar tidak bisa di-back
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +68,11 @@ class DashboardScreen extends StatelessWidget {
         'title': 'Pelatihan & E-Learning',
         'icon': Icons.school_rounded,
         'route': '/pelatihan',
+      },
+      {
+        'title': 'Profil Saya', // Ganti judul
+        'icon': Icons.account_circle_rounded, // Ganti ikon
+        'route': '/profile', // Arahkan ke route profile
       },
       {'title': 'Keluar', 'icon': Icons.logout_rounded, 'route': '/login'},
     ];
@@ -126,7 +167,7 @@ class DashboardScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
                       if (isLogout) {
-                        Navigator.pushReplacementNamed(context, '/login');
+                        _handleLogout(context);
                       } else {
                         Navigator.pushNamed(context, item['route'] as String);
                       }

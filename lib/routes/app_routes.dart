@@ -10,32 +10,35 @@ import '../ui/screens/dashboard/dashboard_screen.dart';
 
 // Layanan
 import '../ui/screens/layanan/layanan_screen.dart';
-import '../ui/screens/layanan/details/izin_usaha_detail.dart';
-import '../ui/screens/layanan/details/merek_produk_detail.dart';
-import '../ui/screens/layanan/details/sertifikasi_detail.dart';
+import '../ui/screens/layanan/nib/nib_list_screen.dart';
+import '../ui/screens/layanan/merek/merek_list_screen.dart';
+import '../ui/screens/layanan/sertifikasi/sertifikasi_list_screen.dart';
 
 // Program
 import '../ui/screens/program/program_screen.dart';
-import '../ui/screens/program/details/kur_detail.dart';
-import '../ui/screens/program/details/umi_detail.dart';
-import '../ui/screens/program/details/lpdb_detail.dart';
-import '../ui/screens/program/details/inkubasi_detail.dart';
+import '../ui/screens/program/kur/kur_list_screen.dart';
+import '../ui/screens/program/umi/umi_list_screen.dart';
+import '../ui/screens/program/lpdb/lpdb_list_screen.dart';
+import '../ui/screens/program/inkubasi/inkubasi_list_screen.dart';
 
 // Pelaporan
 import '../ui/screens/pelaporan/pelaporan_screen.dart';
-import '../ui/screens/pelaporan/details/pelaporan_kegiatan_detail.dart';
-import '../ui/screens/pelaporan/details/pembaruan_profil_detail.dart';
+import '../ui/screens/pelaporan/kegiatan/pelaporan_kegiatan_list_screen.dart';
+import '../ui/screens/pelaporan/profil_umkm/profil_umkm_form_screen.dart';
 
 // Komunitas
 import '../ui/screens/komunitas/komunitas_screen.dart';
-import '../ui/screens/komunitas/details/forum_detail.dart';
-import '../ui/screens/komunitas/details/pelatihan_detail.dart';
-import '../ui/screens/komunitas/details/info_program_detail.dart';
+import '../ui/screens/komunitas/forum/forum_list_screen.dart';
+import '../ui/screens/komunitas/pelatihan/pelatihan_detail_screen.dart';
+import '../ui/screens/komunitas/program_kemenkop/info_program_screen.dart';
 
 // Pelatihan
 import '../ui/screens/pelatihan/pelatihan_screen.dart';
-import '../ui/screens/pelatihan/details/pelatihan_teknis_detail.dart';
-import '../ui/screens/pelatihan/details/e_learning_detail.dart';
+import '../ui/screens/pelatihan/teknis/pelatihan_teknis_detail_screen.dart';
+import '../ui/screens/pelatihan/elearning/e_learning_detail_screen.dart';
+
+// Profile
+import '../ui/screens/profile/profile_screen.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> routes = {
@@ -54,30 +57,35 @@ class AppRoutes {
 
     // Layanan
     '/layanan': (context) => const LayananScreen(),
-    '/layanan/izin-usaha': (context) => const IzinUsahaDetailScreen(),
-    '/layanan/merek-produk': (context) => const MerekProdukDetailScreen(),
-    '/layanan/sertifikasi': (context) => const SertifikasiDetailScreen(),
+    '/layanan/izin-usaha': (context) => const NibListScreen(),
+    '/layanan/merek-produk': (context) => const MerekListScreen(),
+    '/layanan/sertifikasi': (context) => const SertifikasiListScreen(),
 
     // Program
     '/program': (context) => const ProgramScreen(),
-    '/program/kur': (context) => const KurDetailScreen(),
-    '/program/umi': (context) => const UmiDetailScreen(),
-    '/program/lpdb': (context) => const LpdbDetailScreen(),
-    '/program/inkubasi': (context) => const InkubasiDetailScreen(),
+    '/program/kur': (context) => const KurListScreen(),
+    '/program/umi': (context) => const UmiListScreen(),
+    '/program/lpdb': (context) => const LpdbListScreen(),
+    '/program/inkubasi': (context) => const InkubasiListScreen(),
 
     // Pelaporan
     '/pelaporan': (context) => const PelaporanScreen(),
-    '/pelaporan/kegiatan': (context) => const PelaporanKegiatanDetailScreen(),
-    '/pelaporan/pembaruan': (context) => const PembaruanProfilDetailScreen(),
+    '/pelaporan/kegiatan': (context) => const PelaporanKegiatanListScreen(),
+    '/pelaporan/pembaruan': (context) => const ProfilUmkmFormScreen(),
 
     // Komunitas
     '/komunitas': (context) => const KomunitasScreen(),
-    '/komunitas/forum': (context) => const ForumDetailScreen(),
+    '/komunitas/forum': (context) => const ForumListScreen(),
     '/komunitas/pelatihan': (context) => const PelatihanDetailScreen(),
-    '/komunitas/info-program': (context) => const InfoProgramDetailScreen(),
+    '/komunitas/info-program': (context) => const InfoProgramScreen(),
 
+    // Pelatihan
     '/pelatihan': (context) => const PelatihanScreen(),
-    '/pelatihan/teknis-manajemen': (context) => const PelatihanTeknisDetail(),
-    '/pelatihan/e-learning': (context) => const ELearningDetail(),
+    '/pelatihan/teknis-manajemen': (context) =>
+        const PelatihanTeknisDetailScreen(),
+    '/pelatihan/e-learning': (context) => const ELearningDetailScreen(),
+
+    // Profile
+    '/profile': (context) => const ProfileScreen(),
   };
 }
